@@ -75,3 +75,117 @@ Low overhead UI rendering, especially when computational loops are idle or under
 12. Platform Compatibility
 
 Cross-platform support for a wide range of systems that supports opengl 4.3+, with seamless fallback to non-CUDA execution paths on non-NVIDIA devices.
+
+# Installation
+
+Follow these steps to clone, build, and run the project. Make sure to set up all required dependencies.
+
+## Prerequisites
+
+You will need the following installed:
+
+- **[CMake](https://cmake.org/)** (version 3.10 or higher)
+- **[OpenGL](https://www.opengl.org/)** (for rendering)
+- **[GLFW 3.4+](https://www.glfw.org/)** (for window management and input handling)
+- **[CUDA Toolkit](https://developer.nvidia.com/cuda-toolkit)** (if enabling CUDA support)
+
+> **Note**: You can either install GLFW using your system's package manager, or compile and link it as a static `.a` library (as done in this project). For more information, visit the [GLFW website](https://www.glfw.org/).
+
+## Clone the repository
+
+To get started, clone the repository and navigate to the project directory:
+
+```bash
+git clone https://github.com/AlphaAbdo/iComplex.git
+cd iComplex
+```
+
+## Building the project
+
+### Step 1: Create a build directory
+
+```bash
+mkdir build
+```
+
+### Step 2: Configure the project
+
+Use `CMake` to configure the project:
+
+```bash
+cmake -S . -B build
+```
+
+### Step 3: Build the project
+
+Now build the project:
+
+```bash
+cmake --build ./build --parallel 4
+```
+
+### Platform-specific instructions
+
+#### Linux
+
+Ensure you have the following dependencies:
+
+```bash
+sudo apt-get install build-essential cmake libglfw3-dev libgl1-mesa-dev libglu1-mesa-dev
+```
+
+- **Optional**: Install [CUDA](https://developer.nvidia.com/cuda-toolkit) if you want to enable GPU acceleration.
+
+To configure and build the project on Linux with CUDA enabled:
+
+```bash
+mkdir build
+cmake -S . -B build -DENABLE_CUDA=ON
+cmake --build ./build --parallel 4
+```
+
+#### Windows
+
+For Windows, ensure you have the following:
+
+- **Visual Studio** (with CMake integration)
+- **CUDA Toolkit** (if using CUDA)
+
+Open a terminal with Visual Studio environment variables and run:
+
+```bash
+mkdir build
+cd build
+cmake -G "Visual Studio 16 2019" ..
+cmake --build .
+```
+
+If you don't want to enable CUDA, configure with the flag:
+
+```bash
+cmake -S . -B build -DENABLE_CUDA=OFF
+```
+**Note**: Due to CMAKE caching mechanism ,I highly recommend to to use -DENABLE_CUDA=ON or -DENABLE_CUDA=OFF *ONLY* on cuda enabled systems
+
+## Running the project
+
+Once the build is complete, you can run the executable:
+
+```bash
+./iComplex  # on Linux
+iComplex.exe  # on Windows
+```
+
+## Custom Build Targets
+
+- **Build only the CUDA library**:
+  
+  ```bash
+  cmake --build ./build --target build_cuda_lib
+  ```
+
+- **Clean and rebuild the project**:
+  
+  ```bash
+  cmake --build ./build --target reload
+  ```
