@@ -165,7 +165,7 @@ If you don't want to enable CUDA, configure with the flag:
 ```bash
 cmake -S . -B build -DENABLE_CUDA=OFF
 ```
-**Note**: Due to CMAKE caching mechanism ,I highly recommend to to use -DENABLE_CUDA=ON or -DENABLE_CUDA=OFF *ONLY* on cuda enabled systems
+> **Note**: Due to CMAKE caching mechanism ,I highly recommend to to use -DENABLE_CUDA=ON or -DENABLE_CUDA=OFF *ONLY* on cuda enabled systems
 
 ## Running the project
 
