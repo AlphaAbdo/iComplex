@@ -88,6 +88,7 @@ You will need the following installed:
 - **[OpenGL](https://www.opengl.org/)** (for rendering)
 - **[GLFW 3.4+](https://www.glfw.org/)** (for window management and input handling)
 - **[CUDA Toolkit](https://developer.nvidia.com/cuda-toolkit)** (if enabling CUDA support)
+- A **C++17** compatible compiler
 
 > **Note**: You can either install GLFW using your system's package manager, or compile and link it as a static `.a` library (as done in this project). For more information, visit the [GLFW website](https://www.glfw.org/).
 
