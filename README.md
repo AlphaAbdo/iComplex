@@ -176,6 +176,17 @@ Once the build is complete, you can run the executable:
 ./iComplex  # on Linux
 iComplex.exe  # on Windows
 ```
+> **Warning**: For systems with multiple GPUs (e.g., an iGPU from AMD and a discrete NVIDIA GPU), it's important to ensure that the OpenGL context matches the GPU that supports CUDA. By the nature of the project, there is no inter-GPU data transfer. The same SSBO object (and mapped memory address) is periodically and concurrently used by both OpenGL and CUDA without data being transferred between different GPUs.
+>
+> **Windows:** The program can be manually forced to run on the CUDA-enabled GPU.
+>
+> **Linux:** You can use the following command to force the program to run on the NVIDIA GPU:
+>
+```bash
+__NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia ./iComplex  # on Linux
+```
+
+> By **default**, if the program is compiled with CUDA support but CUDA is inaccessible, it will automatically fall back to using compute shaders.
 
 ## Custom Build Targets
 
