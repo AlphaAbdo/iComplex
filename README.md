@@ -201,3 +201,28 @@ __NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia ./iComplex  # on Li
   ```bash
   cmake --build ./build --target reload
   ```
+
+# Interface Controls
+
+The user interface (UI) of the iComplex project provides an intuitive control panel for manipulating various aspects of the fractal visualization and computation. Below is an overview of the key UI components:
+1. Docking Position and Graph
+   - Drag Here / Docking Position: Allows the UI panel to be freely moved or docked in different parts of the window.
+   - Graph Display: This shows a real-time graphical representation of a particular metric (e.g., performance or data range), with maximum and minimum values dynamically updated. Below the graph, a slider allows you to adjust parameters over time.
+2. General Manipulation Panel
+   - Coff[pX]: This section displays and allows modification of complex plane coefficients used in fractal calculations.
+   - Scale: Controls the zoom level or scaling factor of the fractal visualization.
+   - Depth: Specifies the recursion or computation depth, influencing the detail level in the fractal.
+3. Precision Selector
+   - Clicking on the Precision dropdown lets the user switch between different levels of floating-point precision (e.g., Float, Double, Double-Float), which affects both performance and visual accuracy.
+4. Color Management
+   - The Color Wheel provides tools to manipulate the color scheme of the fractal. Users can choose or randomize colors, adjusting RGB values for custom schemes.
+   - The Randomize Color button allows quick changes to the fractal’s appearance.
+5. Checkpoints
+   - Users can manage computation states with Checkpoints. This feature allows saving and loading specific fractal configurations, useful for reverting to specific views or conditions.
+   - Manage Checkpoints provides options for saving and loading checkpoints during the visualization process.
+6. Rendering Options
+   - Render with CUDA: This toggle enables or disables GPU acceleration using CUDA. The user can choose whether to optimize the computation via CUDA for faster rendering of complex fractals.
+   - Refresh: Manually refreshes the fractal display after changing settings.
+7. Extra Features
+   - The Extra Features section provides additional controls like Show Strips Overlay, which adds visual overlays to the fractal display.
+   - Anchor Background locks the background layer in place while interacting with the fractal view.
