@@ -204,25 +204,56 @@ __NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia ./iComplex  # on Li
 
 # Interface Controls
 
-The user interface (UI) of the iComplex project provides an intuitive control panel for manipulating various aspects of the fractal visualization and computation. Below is an overview of the key UI components:
-1. Docking Position and Graph
-   - Drag Here / Docking Position: Allows the UI panel to be freely moved or docked in different parts of the window.
-   - Graph Display: This shows a real-time graphical representation of a particular metric (e.g., performance or data range), with maximum and minimum values dynamically updated. Below the graph, a slider allows you to adjust parameters over time.
-2. General Manipulation Panel
-   - Coff[pX]: This section displays and allows modification of complex plane coefficients used in fractal calculations.
-   - Scale: Controls the zoom level or scaling factor of the fractal visualization.
-   - Depth: Specifies the recursion or computation depth, influencing the detail level in the fractal.
-3. Precision Selector
-   - Clicking on the Precision dropdown lets the user switch between different levels of floating-point precision (e.g., Float, Double, Double-Float), which affects both performance and visual accuracy.
-4. Color Management
-   - The Color Wheel provides tools to manipulate the color scheme of the fractal. Users can choose or randomize colors, adjusting RGB values for custom schemes.
-   - The Randomize Color button allows quick changes to the fractal’s appearance.
-5. Checkpoints
-   - Users can manage computation states with Checkpoints. This feature allows saving and loading specific fractal configurations, useful for reverting to specific views or conditions.
-   - Manage Checkpoints provides options for saving and loading checkpoints during the visualization process.
-6. Rendering Options
-   - Render with CUDA: This toggle enables or disables GPU acceleration using CUDA. The user can choose whether to optimize the computation via CUDA for faster rendering of complex fractals.
-   - Refresh: Manually refreshes the fractal display after changing settings.
-7. Extra Features
-   - The Extra Features section provides additional controls like Show Strips Overlay, which adds visual overlays to the fractal display.
-   - Anchor Background locks the background layer in place while interacting with the fractal view.
+## UI Window
+
+The user interface (UI) of the iComplex project offers an intuitive control panel for manipulating various aspects of fractal visualization and computation. The UI is launched each frame in `IMGUI_Loop.cpp:parallelLoop`, which forwards the execution commands to `betaWindow.cpp:launchUI`. Below is an overview of the key UI components:
+
+### Docking Position and Graph
+
+- **Drag Here / Docking Position**: This feature allows the UI panel to be freely moved or docked in different parts of the window, providing flexibility in layout.
+
+- **Graph Display**: Powered by ImPlot, this component shows a real-time graph of FPS, calculated from the `avgLoopTime` variable. The FPS is derived by averaging the frame latencies from a queue that sums to approximately one second. The graph dynamically updates the maximum and minimum values, and a slider below allows users to adjust the time window (e.g., consistently displaying data for the last 10 seconds).
+
+### General Manipulation Panel
+
+- **Coff[pX] + iCoff[pY]**: This section displays and allows interactive modification (via input or sliding) of the offset coefficients. These coefficients represent the projection of the screen's center onto the complex plane, which is essential for accurate fractal calculations.
+
+- **Scale**: Adjusts the zoom level, controlling how much of the fractal is visible and influencing the visual detail.
+
+- **Depth**: Sets the maximum computation depth, determining the level of detail and complexity in the fractal rendering.
+
+### Precision Selector
+
+- **Precision Dropdown**: Clicking on this dropdown lets the user switch between different levels of floating-point precision (e.g., Float, Double, Double-Float—see `DS_.hpp`), affecting both performance and visual accuracy.
+
+### Color Management
+
+- **Color Wheel**: This tool allows you to adjust and manipulate the fractal's color scheme. It doesn't affect performance since color adjustments are calculated directly within the fragment shader, ensuring smooth rendering regardless of changes.
+  
+- **Randomize Color**: A quick way to alter the appearance of the fractal. Clicking this button generates a new, randomized color scheme, offering a fresh visual without the need for manual tweaking.
+  
+- **Animation Step**: Controls the internal offsetting of colors in an animated fashion, creating dynamic color shifts over time, adding visual movement to the fractal.
+  
+### Checkpoints
+
+- **Manage Computation States**: Users can manage computation states with Checkpoints. This feature enables the saving and loading of specific fractal configurations, making it easy to revert to desired views or conditions.
+
+- **Manage Checkpoints**: This option provides functionalities for saving and loading checkpoints during the visualization process. Users can also reorder, delete, and check the positions of their saved configurations for better organization.
+
+- **Data Storage**: All coordinate data is stored in `checkpoint.json`, ensuring that configurations can be easily accessed and managed.
+
+### Rendering Options
+
+- **Blur Shaders**: Originally implemented as a compute shader, Blur Shaders perform specific transformations on the raw SSBO (Shader Storage Buffer Object) and pass the results to the final SSBO used in the graphical pipeline. The menu displays blur shaders that are manually declared in the program. This feature enhances the appearance of the final image by adjusting the SSBO, which technically represents a heat map.
+
+- **Render with CUDA**: This toggle allows users to enable or disable GPU acceleration using CUDA. Users can choose to optimize computations via CUDA for faster rendering of complex fractals.
+
+- **Refresh**: This option manually refreshes the fractal display, but it only takes effect when CUDA is being used.
+
+### Extra Features
+
+- **Reload Components**: This key feature allows for the dynamic use of both GLSL and CUDA as dynamic libraries, enabling users to reload them without the need for recompilation or relaunching components. It preserves the current context of the program and is implemented in parallel, applying changes only if the recompilation is successful.
+
+- **Show Strips Overlay**: This control adds visual overlays to the fractal display, enhancing the overall visual experience and providing additional context to the user.
+
+- **Anchor Background**: This feature locks the background layer in place while interacting with the fractal view. When enabled, it makes the screen the reference for the plane, rather than the window, allowing the window to serve as a scope for observing the upper complex region.
