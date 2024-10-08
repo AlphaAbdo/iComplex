@@ -257,3 +257,28 @@ The user interface (UI) of the iComplex project offers an intuitive control pane
 - **Show Strips Overlay**: This control adds visual overlays to the fractal display, enhancing the overall visual experience and providing additional context to the user.
 
 - **Anchor Background**: This feature locks the background layer in place while interacting with the fractal view. When enabled, it makes the screen the reference for the plane, rather than the window, allowing the window to serve as a scope for observing the upper complex region.
+
+## Key Bindings and Mouse Interactions
+
+This section details the key bindings and mouse controls used in the iComplex project for navigating and manipulating the fractal visualization.
+
+### Key Bindings
+- **Quit**: Press **Esc**, **q**, or **Q** to close the application.
+- **Toggle IMGUI**: Press **F1** to enable or disable the IMGUI interface (if enabled).
+- **Frame Shifting**:
+  - **Left Arrow**: Shift the fractal view left.
+  - **Right Arrow**: Shift the fractal view right.
+  - **Up Arrow**: Shift the fractal view up.
+  - **Down Arrow**: Shift the fractal view down.
+- **Zoom Control**:
+  - **Plus (+) or Keypad Add**: Zoom in.
+  - **Minus (-) or Keypad Subtract**: Zoom out.
+
+### Mouse Controls
+- **Left Mouse Button**: Click and drag to move the fractal view.
+- **Middle Mouse Button**: Click and hold to scale the view based on the cursor position.
+- **Right Mouse Button**: Reserved for additional functionality (currently not implemented).
+
+### Mouse Positioning
+- The cursor position affects the fractal rendering, allowing for precise manipulation of the view based on mouse movements. The scaling factor adjusts dynamically according to the mouse's vertical movement, providing an intuitive zooming experience.
+
