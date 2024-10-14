@@ -208,11 +208,19 @@ __NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia ./iComplex  # on Li
 
 The user interface (UI) of the iComplex project offers an intuitive control panel for manipulating various aspects of fractal visualization and computation. The UI is launched each frame in `IMGUI_Loop.cpp:parallelLoop`, which forwards the execution commands to `betaWindow.cpp:launchUI`. Below is an overview of the key UI components:
 
+<div align="center">
+  <img src="https://github.com/AlphaAbdo/iComplex-assets/blob/main/iComplex-assets/UI-overview.png?raw=true" alt="Alt Text""/>
+</div>
+
 ### Docking Position and Graph
 
 - **Drag Here / Docking Position**: This feature allows the UI panel to be freely moved or docked in different parts of the window, providing flexibility in layout.
 
 - **Graph Display**: Powered by ImPlot, this component shows a real-time graph of FPS, calculated from the `avgLoopTime` variable. The FPS is derived by averaging the frame latencies from a queue that sums to approximately one second. The graph dynamically updates the maximum and minimum values, and a slider below allows users to adjust the time window (e.g., consistently displaying data for the last 10 seconds).
+
+<div align="center">
+  <img src="https://github.com/AlphaAbdo/iComplex-assets/blob/main/iComplex-assets/FPS-graph.gif?raw=true" alt="Alt Text""/>
+</div>
 
 ### General Manipulation Panel
 
