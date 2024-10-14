@@ -290,3 +290,102 @@ This section details the key bindings and mouse controls used in the iComplex pr
 ### Mouse Positioning
 - The cursor position affects the fractal rendering, allowing for precise manipulation of the view based on mouse movements. The scaling factor adjusts dynamically according to the mouse's vertical movement, providing an intuitive zooming experience.
 
+
+
+
+# 7. Development
+
+## Code Overview
+The iComplex project is structured into three main regions: **Shaders**, **CUDA**, and **Essential Headers**. Each of these regions has a distinct role in the project's architecture, and together they form the backbone of the system's functionality.
+
+## 7.1. Shaders
+The `shaders/` folder contains all the shader code, including those responsible for rendering, applying effects like blur, and generating fractals. The compute shaders, which generate the fractals, are integrated at the compilation stage and are not standalone files. Here's an overview of the directory:
+
+```
+shaders/
+├── blur/
+│   ├── BilateralFilter.glsl
+│   ├── DirectionalBlur.glsl
+│   └── Discret3x3GaussianBlur.glsl
+├── DefInc.glsl
+├── DisDepGen.glsl
+├── ModedFunctionDef.glsl
+├── screenQuad.fs
+└── screenQuad.vs
+```
+
+### Blur Shaders (`shaders/blur/`)
+This subdirectory contains GLSL files for various blur effects applied in post-processing, such as:
+- `BilateralFilter.glsl`: Applies edge-preserving smoothing using a bilateral filter.
+- `DirectionalBlur.glsl`: Implements a directional blur for artistic effects.
+- `Discret3x3GaussianBlur.glsl`: A discrete 3x3 Gaussian blur to soften the rendered image.
+
+### Other Shader Files
+- **DefInc.glsl**: Provides method definitions and overloads that are declared in `DisDepGen.glsl`, breaking down functionality to make the code more modular and maintainable.
+- **DisDepGen.glsl**: The primary shader file that defines the core fractal generation code. It contains basic fractal generation logic without optimizations, serving as the foundation of the rendering process.
+- **ModedFunctionDef.glsl**: This file contains overloaded functions responsible for generating fractals under different modes, allowing for flexibility in the rendering process based on the fractal type and parameters.
+- **screenQuad.fs** and **screenQuad.vs**: These files define fragment and vertex shaders for a screen-aligned quad. The quad serves as the target for rendering the final output of the fractal computations.
+
+> **Note**: The compute shaders work together during compilation to generate the fractals. Their individual files don't hold meaning alone but are integral during the build process.
+
+## 7.2. CUDA
+The CUDA files are housed in the `cuda_src/` directory. They handle the fractal generation logic by offloading computationally heavy tasks to the GPU. Here's the layout of the CUDA components:
+
+```
+cuda_src/
+├── CalcIndex.cuh
+├── frameState.cu
+├── helper.cuh
+├── kernels.cu
+├── libcuda_src.cu
+└── libcuda_src.h
+```
+
+- **CalcIndex.cuh**: Contains a single template function responsible for calculating the fractal index at various detail levels, which is the core of the fractal generation process.
+- **frameState.cu**: Defines functions that manage the fractal's frame state. These functions specialize in different fractal generation stages, optimizing based on an `enum class template` called `fSTATE`. This optimization minimizes unnecessary calculations and adapts based on the fractal's state.
+- **helper.cuh**: A utility header that provides auxiliary functions to support fractal generation and optimization. These helper functions assist the main computational logic but are not directly involved in fractal generation.
+- **kernels.cu**: Implements the CUDA kernels used for parallel processing of fractal data. These kernels perform the heavy computational tasks needed to generate fractals efficiently on the GPU.
+- **libcuda_src.cu**: Acts as the main entry point for CUDA-based fractal generation. It includes functions called externally from the main program to perform fractal computations.
+- **libcuda_src.h**: A header file that groups namespace definitions and function declarations for the CUDA module, ensuring that CUDA components are well-encapsulated and isolated from the rest of the codebase.
+
+> **Note**: All CUDA files are included directly in the main compilation due to the nature of function template name mangling, meaning there is no separate compilation process for CUDA.
+
+## 7.3. Essential Headers
+Essential headers manage core program functionality, such as environment variables and compile-time switches. These headers are included across the entire codebase and significantly influence the project's configuration.
+
+- **`macros.hpp`**: This file contains major compile-time switches and macros that alter the behavior of the program, such as enabling optimizations, toggling debug modes, or defining fractal generation parameters.
+- **`includes/VarsPool.hpp`**: Contains inline environment variables that act as configuration settings for the entire project. These variables are accessible globally, ensuring consistent behavior across the codebase. `VarsPool.hpp` functions similarly to macros but with more flexibility for runtime changes.
+
+Both `macros.hpp` and `VarsPool.hpp` are critical components, included in nearly all files except for the dynamic library, ensuring consistent control over the program's configuration.
+
+## 7.4. Loop Control
+The project uses a sophisticated, multi-threaded architecture to manage its execution flow. There are three key loops that operate in parallel, ensuring smooth execution of computations, rendering, and UI updates:
+
+<div align="center">
+  <img src="https://github.com/AlphaAbdo/iComplex-assets/blob/main/iComplex-assets/Main%20Entrance-min.jpg?raw=true" alt="Alt Text""/>
+</div>
+
+### Main Loop
+- Located in `main.cpp`
+- Responsible for the overall control flow of the application
+- Handles initialization, frame updates, and orchestrates the other loops
+- Coordinates the rendering and computational tasks to ensure the program remains responsive
+
+### Computational Loop
+- Located in `AuxiliaryLoopManager/Computational_Loop.cpp`
+- Performs the fractal generation and other resource-intensive tasks
+- Operates concurrently with the Main Loop
+- Leverages CUDA for fractal computations
+- Ensures minimal lag between input and output
+
+### IMGUI Loop
+- Implemented in `AuxiliaryLoopManager/IMGUI_Loop.cpp`
+- Handles the user interface, ensuring real-time updates based on user interactions
+- Communicates with both the Main and Computational loops
+- Reflects fractal parameter changes and displays performance data like FPS in real time
+
+These loops work in tandem to balance the workload between fractal generation, rendering, and UI updates. Special care has been taken to reduce latency and improve performance when utilizing CUDA for heavy computations.
+
+---
+
+This **Development** section provides a comprehensive guide for developers working with the iComplex project, highlighting key components and offering insights into the code's structure.
