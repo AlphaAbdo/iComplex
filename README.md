@@ -384,8 +384,9 @@ The project uses a sophisticated, multi-threaded architecture to manage its exec
 - Communicates with both the Main and Computational loops
 - Reflects fractal parameter changes and displays performance data like FPS in real time
 
-These loops work in tandem to balance the workload between fractal generation, rendering, and UI updates. Special care has been taken to reduce latency and improve performance when utilizing CUDA for heavy computations.
+These loops work together to balance the workload between fractal generation, rendering, and UI updates. Special care has been taken to reduce latency and improve performance, particularly when utilizing CUDA for heavy computations.
 
----
+In fact, the loops are not fully parallelized; they are entangled in a specific way that absorbs mutual latency. This means there are anchor points where one loop waits for the main loop. However, auxiliary loops are never idle at the same time.
 
-This **Development** section provides a comprehensive guide for developers working with the iComplex project, highlighting key components and offering insights into the code's structure.
+> **Note**: If you want fully parallelized loops, you should use two FBO (Framebuffer Object) textures with two swap textures (or even more) to stack frames and merge them later in the main loop. However, keep in mind that handling window resizing could become more challenging in this approach.
+
