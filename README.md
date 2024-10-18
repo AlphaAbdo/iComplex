@@ -248,6 +248,12 @@ The user interface (UI) of the iComplex project offers an intuitive control pane
 
 - **Manage Checkpoints**: This option provides functionalities for saving and loading checkpoints during the visualization process. Users can also reorder, delete, and check the positions of their saved configurations for better organization.
 
+
+<div align="center">
+  <img src="https://github.com/AlphaAbdo/iComplex-assets/blob/main/iComplex-assets/Screenshot%20from%202024-10-08%2003-54-26.png?raw=true" alt="Alt Text""/>
+</div>
+
+
 - **Data Storage**: All coordinate data is stored in `checkpoint.json`, ensuring that configurations can be easily accessed and managed.
 
 ### Rendering Options
@@ -389,4 +395,7 @@ These loops work together to balance the workload between fractal generation, re
 In fact, the loops are not fully parallelized; they are entangled in a specific way that absorbs mutual latency. This means there are anchor points where one loop waits for the main loop. However, auxiliary loops are never idle at the same time.
 
 > **Note**: If you want fully parallelized loops, you should use two FBO (Framebuffer Object) textures with two swap textures (or even more) to stack frames and merge them later in the main loop. However, keep in mind that handling window resizing could become more challenging in this approach.
+
+
+# Gallery
 
