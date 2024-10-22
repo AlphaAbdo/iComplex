@@ -399,3 +399,12 @@ In fact, the loops are not fully parallelized; they are entangled in a specific 
 
 # Gallery
 
+[![Watch the video](https://img.youtube.com/vi/R2Vch8pVXr8/maxresdefault.jpg)](https://youtu.be/R2Vch8pVXr8)
+
+[![Watch the video](https://img.youtube.com/vi/fG5RB4swIfQ/maxresdefault.jpg)](https://youtu.be/fG5RB4swIfQ)
+
+[![Watch the video](https://img.youtube.com/vi/4XskZ9WPJzI/maxresdefault.jpg)](https://youtu.be/4XskZ9WPJzI)
+
+[![Watch the video](https://img.youtube.com/vi/gUn5RtOc2Ok/maxresdefault.jpg)](https://youtu.be/gUn5RtOc2Ok)
+
+[![Watch the video](https://img.youtube.com/vi/IN7mgSBb7O4/maxresdefault.jpg)](https://youtu.be/IN7mgSBb7O4)
